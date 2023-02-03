@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Justin/MainMenu.unity
+    guid: b06cf2ffc16ee11479a905ff39d4e0a4
+  - enabled: 1
+    path: Assets/Scenes/Justin/Justin.unity
+    guid: 25ae1fc23affaf0498f4633f096ca689
   m_configObjects: {}
