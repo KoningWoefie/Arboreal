@@ -9,7 +9,7 @@ public class Melee : MonoBehaviour
     public Transform Enemy { get => enemy.transform; }	
     //components
     MeshRenderer Meshrenderer;
-    Animator anim;
+    [SerializeField] private Animator anim;
 
     public Animator Anim { get => anim; }
 
@@ -40,7 +40,6 @@ public class Melee : MonoBehaviour
     void Start()
     {
         Meshrenderer = GetComponent<MeshRenderer>();
-        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -51,6 +50,7 @@ public class Melee : MonoBehaviour
             Attack();
             Parry();
         }
+        anim.SetBool("Attacking", attacking);
     }
 
     void Attack()
@@ -59,6 +59,7 @@ public class Melee : MonoBehaviour
         {
             attacking = true;
             t.StartTimer();
+            Debug.Log("Attacking");
         }
         if(t.Seconds() >= recoveryTime)
         {
@@ -72,7 +73,7 @@ public class Melee : MonoBehaviour
 
     void Parry()
     {
-        if(enemy.GetComponentInChildren<Melee>().Attacking)
+        if(enemy.GetComponent<Melee>() != null && enemy.GetComponentInChildren<Melee>().Attacking)
         {
             if(Input.GetMouseButtonDown(1) && enemy.GetComponentInChildren<Melee>().t.Seconds() < parryWindow)
             {
