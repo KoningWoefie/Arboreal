@@ -6,6 +6,7 @@ public class Melee : MonoBehaviour
 {
     //GameOjects
     [SerializeField] private GameObject enemy;
+    
     public Transform Enemy { get => enemy.transform; }	
     //components
     MeshRenderer Meshrenderer;

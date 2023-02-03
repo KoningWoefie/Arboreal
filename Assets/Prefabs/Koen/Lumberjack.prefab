@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 5724726950356464435}
   - component: {fileID: 5724726950356464438}
   - component: {fileID: 5724726950356464437}
+  - component: {fileID: 1849645983}
   m_Layer: 0
   m_Name: Lumberjack
   m_TagString: Untagged
@@ -146,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fb8fcad138fe24d8ef682ee954789e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  t: {fileID: 0}
   player: {fileID: 0}
   waypoints:
   - {fileID: 0}
@@ -186,6 +188,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1849645983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724726950356464434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc02c3e0d26a874cac75e5641ddc5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5724726950632044315
 GameObject:
   m_ObjectHideFlags: 0
