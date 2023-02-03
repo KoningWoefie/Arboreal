@@ -11,11 +11,21 @@ public class Lumberjack : MonoBehaviour
     private int currentWaypoint ;
 
     private void Move(){
-        //moves the lumberjack towards the player if player is in range
-        if (player != null && Vector3.Distance(transform.position, player.transform.position) < 10f)
+        //moves the lumberjack towards the player if player is in range but stops at a distance of 10 to throw an axe
+        if (player != null && Vector3.Distance(transform.position, player.transform.position) < 15f && Vector3.Distance(transform.position, player.transform.position) > 7f)
         {
             transform.position += transform.forward * Time.deltaTime * 5f;
              transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * 10);
+        }
+        //stand still around the player to shoot an axe
+        else if(Vector3.Distance(transform.position, player.transform.position) < 8f && Vector3.Distance(transform.position, player.transform.position) > 4f){
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * 10);
+        }
+        //if player gets to close turn around and run away from the player
+        else if (Vector3.Distance(transform.position, player.transform.position) < 4f){
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(transform.position - player.transform.position), Time.deltaTime * 10);
+            transform.position += transform.forward * Time.deltaTime * 5f;
+
         }
         else
         {
