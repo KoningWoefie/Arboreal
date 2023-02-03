@@ -5,8 +5,9 @@ using UnityEngine;
 public class RootManipulation : MonoBehaviour
 {
     [SerializeField] private Camera camera;
-    [SerializeField] float maxgrabdistance = 5f;
+    [SerializeField] float maxgrabdistance = 10f;
     [SerializeField] Transform objectholder;
+    [SerializeField] Material highlightmaterial;
 
     Rigidbody GrabbedRB;
 
@@ -20,7 +21,18 @@ public class RootManipulation : MonoBehaviour
     {
         if(GrabbedRB)
         {
-            GrabbedRB.MovePosition(objectholder.transform.position);
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetAxis("Mouse ScrollWheel") < 0f){
+                if (Input.GetKey(KeyCode.Z)){
+                GrabbedRB.transform.Rotate(0, Input.GetAxis("Mouse ScrollWheel") * 20, 0);
+                return;  
+            }
+                objectholder.transform.Translate(0, 0, Input.GetAxis("Mouse ScrollWheel") * 2);
+            }
+            else
+            {
+                GrabbedRB.MovePosition(objectholder.transform.position);
+            }
+            
         }
 
         if(Input.GetKeyDown(KeyCode.E))
