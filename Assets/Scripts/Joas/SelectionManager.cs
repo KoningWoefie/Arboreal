@@ -20,7 +20,7 @@ public class SelectionManager : MonoBehaviour
         }
         var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 10f))
+        if(Physics.Raycast(ray, out hit, 100f))
         {
             var selection = hit.transform;
             if(selection.CompareTag(selectableTag))

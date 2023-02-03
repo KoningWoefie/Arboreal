@@ -5,7 +5,7 @@ using UnityEngine;
 public class RootManipulation : MonoBehaviour
 {
     [SerializeField] private Camera camera;
-    [SerializeField] float maxgrabdistance = 10f;
+    [SerializeField] float maxgrabdistance = 34.762f;
     [SerializeField] Transform objectholder;
     [SerializeField] Material highlightmaterial;
 
