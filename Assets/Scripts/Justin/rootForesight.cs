@@ -15,6 +15,7 @@ public class rootForesight : MonoBehaviour
     public Camera EnemyCamera;
     public Volume PP_Handler;
 
+
     void Start() {
         // Set the main camera to greyscale, the PP_Handler has a URP "Volume" component which has a "Color Adjustments" component, just set its "Saturation" to 100
         PP_Handler.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorAdjustments);
@@ -29,14 +30,31 @@ public class rootForesight : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            // Set the main camera to greyscale, the PP_Handler has a URP "Volume" component which has a "Color Adjustments" component, just set its "Saturation" to 100
+            RootSight(true);
+        }
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            RootSight(false);
+        }
+
+        // Remove the EnemyLayer of all GameObjects more than 10 units away from the player, re-add it if they are closer than 10 units
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            if (Vector3.Distance(enemy.transform.position, transform.position) > 10) {
+                enemy.layer = 0;
+            } else {
+                enemy.layer = 6;
+            }
+        }
+
+    }
+
+    void RootSight(bool Enabled) {
+        if (Enabled) {
             PP_Handler.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorAdjustments);
             colorAdjustments.saturation.value = -100;
 
             EnemyCamera.enabled = true;
-        }
-        if (Input.GetKeyUp(KeyCode.X))
-        {
+        } else {
             PP_Handler.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorAdjustments);
             colorAdjustments.saturation.value = 0;
 
