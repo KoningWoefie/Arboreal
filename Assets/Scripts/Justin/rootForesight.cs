@@ -48,7 +48,7 @@ public class rootForesight : MonoBehaviour
 
     }
 
-    void RootSight(bool Enabled) {
+    public void RootSight(bool Enabled) {
         if (Enabled) {
             PP_Handler.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorAdjustments);
             colorAdjustments.saturation.value = -100;
