@@ -9,6 +9,7 @@ public class Melee : MonoBehaviour
     public Transform Enemy { get => enemy.transform; }	
     //components
     MeshRenderer Meshrenderer;
+    private BoxCollider hitBox;
     [SerializeField] private Animator anim;
 
     public Animator Anim { get => anim; }
@@ -23,8 +24,8 @@ public class Melee : MonoBehaviour
     public int Damage { get => damage; }
     //floats
     private float parryWindow = 0.2f;
-    private float attackDuration = 0.6f;
-    private float recoveryTime = 0.9f;
+    private float attackDuration = 1.2f;
+    private float recoveryTime = 1.5f;
     //mouse positions
     private float mouseX = 0;
     private float mouseY = 0;
@@ -40,6 +41,8 @@ public class Melee : MonoBehaviour
     void Start()
     {
         Meshrenderer = GetComponent<MeshRenderer>();
+        hitBox = GetComponent<BoxCollider>();
+        hitBox.enabled = false;
     }
 
     // Update is called once per frame
@@ -58,16 +61,17 @@ public class Melee : MonoBehaviour
         if(Input.GetMouseButtonDown(0) && t.Seconds() == 0)
         {
             attacking = true;
+            hitBox.enabled = true;
             t.StartTimer();
-            Debug.Log("Attacking");
         }
-        if(t.Seconds() >= recoveryTime)
+        else if(t.Seconds() >= recoveryTime)
         {
             t.StopTimer();
         }
-        if(t.Seconds() >= attackDuration)
+        else if(t.Seconds() >= attackDuration)
         {
             attacking = false;
+            hitBox.enabled = false;
         }
     }
 
