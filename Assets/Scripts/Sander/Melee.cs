@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Melee : MonoBehaviour
 {
-    //constants
-    private const float DEADZONE = 0.2f;
-
     //GameOjects
     [SerializeField] private GameObject enemy;
     public Transform Enemy { get => enemy.transform; }	
@@ -35,14 +32,8 @@ public class Melee : MonoBehaviour
     private float lastMousePosY = 0;
 
     //bools
-    private bool top = false;
-    private bool right = false;
-    private bool left = false;
     private bool attacking = false;
 
-    public bool Top { get => top; }
-    public bool Right { get => right; }
-    public bool Left { get => left; }
     public bool Attacking { get => attacking; set => attacking = value;}
     
     // Start is called before the first frame update
@@ -57,33 +48,6 @@ public class Melee : MonoBehaviour
     {
         if(transform.parent.GetComponent<Player>().moveEnabled)
         {
-            mouseX += Input.GetAxis("Mouse X");
-            mouseY += Input.GetAxis("Mouse Y");
-
-            float mouseChangeX = mouseX - lastMousePosX;
-            float mouseChangeY = mouseY - lastMousePosY;
-
-            lastMousePosX = mouseX;
-            lastMousePosY = mouseY;
-
-            if(mouseChangeY > DEADZONE && mouseChangeY > mouseChangeX)
-            {
-                right = false;
-                left = false;
-                top = true;
-            }
-            else if(mouseChangeX > DEADZONE)
-            {
-                right = true;
-                left = false;
-                top = false;
-            }
-            else if(mouseChangeX < DEADZONE * -1)
-            {
-                right = false;
-                left = true;
-                top = false;
-            }
             Attack();
             Parry();
         }
@@ -93,30 +57,8 @@ public class Melee : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0) && t.Seconds() == 0)
         {
-            if(top)
-            {
-                anim.SetBool("Top", true);
-                attacking = true;
-                t.StartTimer();
-            }
-            else if(left)
-            {
-                anim.SetBool("Left", true);
-                attacking = true;
-                t.StartTimer();
-            }
-            else if(right)
-            {
-                anim.SetBool("Right", true);
-                attacking = true;
-                t.StartTimer();
-            }
-        }
-        else if(Input.GetMouseButtonUp(0))
-        {
-            anim.SetBool("Top", false);
-            anim.SetBool("Left", false);
-            anim.SetBool("Right", false);
+            attacking = true;
+            t.StartTimer();
         }
         if(t.Seconds() >= recoveryTime)
         {
@@ -135,9 +77,6 @@ public class Melee : MonoBehaviour
             if(Input.GetMouseButtonDown(1) && enemy.GetComponentInChildren<Melee>().t.Seconds() < parryWindow)
             {
                 enemy.GetComponentInChildren<Melee>().t.StopTimer();
-                enemy.GetComponentInChildren<Melee>().Anim.SetBool("Top", false);
-                enemy.GetComponentInChildren<Melee>().Anim.SetBool("Left", false);
-                enemy.GetComponentInChildren<Melee>().Anim.SetBool("Right", false);
                 enemy.GetComponentInChildren<Melee>().Attacking = false;
                 Debug.Log("Parried");
             }
@@ -150,18 +89,9 @@ public class Melee : MonoBehaviour
         {
             Melee m = collisionInfo.gameObject.GetComponentInChildren<Melee>();
 
-            if((top && m.Top) || (right && m.Right) || (left && m.Left))
-            {
-                collisionInfo.gameObject.GetComponent<Player>().TakeBlockedDamage(damage);
-                attacking = false;
-                t.StopTimer();
-            }
-            else
-            {
-                collisionInfo.gameObject.GetComponent<Player>().TakeDamage(damage);
-                attacking = false;
-                t.StopTimer();
-            }
+            collisionInfo.gameObject.GetComponent<Player>().TakeDamage(damage);
+            attacking = false;
+            t.StopTimer();
         }
     }
 }
