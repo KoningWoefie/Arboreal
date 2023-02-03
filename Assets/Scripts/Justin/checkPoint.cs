@@ -9,6 +9,7 @@ public class checkPoint : MonoBehaviour
     GameObject instructionalPopup;
     Text instructionalTitle;
     Text instructionalInstruction;
+    private GameObject SelectionManager;
 
     private GameObject Player;
     void Start()
@@ -23,7 +24,13 @@ public class checkPoint : MonoBehaviour
         instructionalPopup.transform.localScale = new Vector3(1, 1, 1);
 
         Player = GameObject.Find("Player");
-        Player.GetComponent<rootForesight>().enabled = false;
+        Player.GetComponent<rootForesight>().enabled = true;
+        Player.GetComponent<RootManipulation>().enabled = false;
+
+
+        SelectionManager = GameObject.Find("SelectionManager");
+        SelectionManager.SetActive(false);
+
 
     }
 
@@ -42,11 +49,11 @@ public class checkPoint : MonoBehaviour
             if (other.gameObject.tag == "Player")
             {
                 if(checkpointNumber == 1) {
-                    Debug.Log("Fakka strijder, du er nået til checkpoint 1");
-                    instructionalTitle.text = "<b>UNLOCKED:</b> Root Foresight";
-                    instructionalInstruction.text = "Spot enemies through walls with <b>X</b>";
-                    Player.GetComponent<rootForesight>().enabled = true;
+                    instructionalTitle.text = "<b>UNLOCKED:</b> Root Manipulation";
+                    instructionalInstruction.text = "Pick up objects with <b>E</b>, then change the position with <b>scrollwheel</b> and hold <b>Z</b> and use your <b>scrollwheel</b> at the same time to rotate the object. Yeah this makes no sense, no we don't care";
+                    Player.GetComponent<RootManipulation>().enabled = true;
                     instructionalPopup.SetActive(true);
+                    SelectionManager.SetActive(true);
                     //SelfDestruct();
 
                     DisableEverything();
