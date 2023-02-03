@@ -13,7 +13,15 @@ public class rootForesight : MonoBehaviour
 
     public Camera mainCamera;
     public Camera EnemyCamera;
-    public GameObject PP_Handler;
+    public Volume PP_Handler;
+
+    void Start() {
+        // Set the main camera to greyscale, the PP_Handler has a URP "Volume" component which has a "Color Adjustments" component, just set its "Saturation" to 100
+        PP_Handler.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorAdjustments);
+        colorAdjustments.saturation.value = 0;
+
+        EnemyCamera.enabled = false;
+    }
     
 
     // Update is called once per frame
@@ -22,15 +30,17 @@ public class rootForesight : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             // Set the main camera to greyscale, the PP_Handler has a URP "Volume" component which has a "Color Adjustments" component, just set its "Saturation" to 100
-            PP_Handler.GetComponent<Volume>().profile.TryGet<ColorAdjustments>(out ColorAdjustments colorAdjustments);
-            colorAdjustments.saturation.value = 100;
+            PP_Handler.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorAdjustments);
+            colorAdjustments.saturation.value = -100;
 
-            Debug.Log("Root Foresight Activated");
+            EnemyCamera.enabled = true;
         }
         if (Input.GetKeyUp(KeyCode.X))
         {
+            PP_Handler.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorAdjustments);
+            colorAdjustments.saturation.value = 0;
 
-            Debug.Log("Root Foresight Deactivated");
+            EnemyCamera.enabled = false;
         }
     }
 }
