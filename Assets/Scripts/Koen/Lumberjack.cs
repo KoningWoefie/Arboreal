@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Lumberjack : MonoBehaviour
 {
+    [SerializeField] private Timer t;
     //a reference to the player to kill
     [SerializeField] private GameObject player;
     [SerializeField] private Transform[] waypoints;
@@ -12,6 +13,9 @@ public class Lumberjack : MonoBehaviour
     [SerializeField] private int rotationSpeed = 10;
 
     private int currentWaypoint ;
+    private int health = 100;
+
+    private bool hit = false;
 
     private void Move(){
         //moves the lumberjack towards the player if player is in range but stops at a distance of 10 to throw an axe
@@ -49,25 +53,30 @@ public class Lumberjack : MonoBehaviour
         }
     }
 
-    private void Attack(){
-        //if the lumberjack is close enough to the player, destroy the player
-        if (Vector3.Distance(transform.position, player.transform.position) < 1f)
-        {
-            Destroy(player);
-        }
+    void TakeDamage(int damage)
+    {
+        health -= damage;
+        Debug.Log("Lumberjack took " + damage + " damage");
     }
 
     private void Update()
     {
         Move();
-        Attack();
-
-
+        if(t.Seconds() >= 0.3f)
+        {
+            hit = false;
+            t.StopTimer();
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hit");
+        if(other.gameObject.tag == "Root" && hit == false)
+        {
+            TakeDamage(10);
+            hit = true;
+            t.StartTimer();
+        }
     }
 
 }

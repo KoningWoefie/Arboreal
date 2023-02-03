@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if(other.tag == "Axe")
         {
             TakeDamage(10);
         }
