@@ -147,4 +147,12 @@ public class Player : MonoBehaviour
             wall = false;
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Enemy")
+        {
+            TakeDamage(10);
+        }
+    }
 }
