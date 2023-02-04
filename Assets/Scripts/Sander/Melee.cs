@@ -49,11 +49,8 @@ public class Melee : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.parent.GetComponent<Player>().moveEnabled)
-        {
-            Attack();
-            Parry();
-        }
+        Attack();
+         Parry();
         anim.SetBool("Attacking", attacking);
     }
 
