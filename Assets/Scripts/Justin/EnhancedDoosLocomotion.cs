@@ -13,11 +13,11 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     // Private variables for internal use.
     private Vector3 moveDirection = Vector3.zero;  // The direction the character is moving.
-    [SerializeField] private int health = 100;   // The character's health, serialized to show in the Unity Editor.
-    private int maxHealth = 100;    // The character's maximum health.
-    [SerializeField] private int stamina = 100;  // The character's stamina, serialized to show in the Unity Editor.
-    public int Stamina { get { return stamina; } set { stamina = value; } }
-    private int maxStamina = 100;   // The character's maximum stamina.
+    [SerializeField] private float health = 100;   // The character's health, serialized to show in the Unity Editor.
+    private float maxHealth = 100;    // The character's maximum health.
+    [SerializeField] private float stamina = 100;  // The character's stamina, serialized to show in the Unity Editor.
+    public float Stamina { get { return stamina; } set { stamina = value; } }
+    private float maxStamina = 100;   // The character's maximum stamina.
     private bool lockedOn = false;  // A flag to determine if the character is locked on to an enemy.
 
     private bool hasLockIcon = false;   // A flag to determine if the lock icon has been instantiated.
@@ -86,6 +86,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         }
 
         LockOn();
+        updateHealthBar();
+        updateStaminaBar();
     }
 
     // Function to reduce the character's health by a specified amount.
@@ -178,7 +180,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     {
         if(health != 0)
         {
-            healthBar.transform.localScale = new Vector3(health / maxHealth, 1, 1);
+            healthBar.transform.localScale = new Vector3((float)(health / maxHealth), 1, 1);
         }
     }
 
@@ -186,7 +188,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     {
         if(stamina != 0)
         {
-            staminaBar.transform.localScale = new Vector3(stamina / maxStamina, 1, 1);
+            staminaBar.transform.localScale = new Vector3((float)(stamina / maxStamina), 1, 1);
         }
     }
 
