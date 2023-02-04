@@ -84,13 +84,13 @@ public class checkPoint : MonoBehaviour
         Debug.Log("DISABLED EVERYTHING");
         // set level speed to 0
         Camera.main.GetComponent<camera>().enabled = false;
-        Player.GetComponent<Player>().enabled = false;
+        Player.GetComponent<EnhancedDoosLocomotion>().enabled = false;
     }
 
     void EnableEverything() {
         Debug.Log("ENABLED EVERYTHING");
         // set level speed to 1
         Camera.main.GetComponent<camera>().enabled = true;
-        Player.GetComponent<Player>().enabled = true;
+        Player.GetComponent<EnhancedDoosLocomotion>().enabled = true;
     }
 }

@@ -59,12 +59,4 @@ public class RootManipulation : MonoBehaviour
             }     
         }
     }
-
-    void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Selectable" && isGrabbed) {
-            Physics.IgnoreCollision(other.collider, GetComponent<Collider>());
-        } else {
-            Physics.IgnoreCollision(other.collider, GetComponent<Collider>(), false);
-        }
-    }
 }
