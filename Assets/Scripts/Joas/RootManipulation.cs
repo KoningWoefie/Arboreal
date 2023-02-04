@@ -8,6 +8,7 @@ public class RootManipulation : MonoBehaviour
     [SerializeField] float maxgrabdistance = 34.762f;
     [SerializeField] Transform objectholder;
     [SerializeField] Material highlightmaterial;
+    [SerializeField] Material defaultmaterial;
 
     Rigidbody GrabbedRB;
     public bool isGrabbed;
@@ -20,8 +21,10 @@ public class RootManipulation : MonoBehaviour
    
     void Update()
     {
+
         if(GrabbedRB)
         {
+            GrabbedRB.GetComponent<Renderer>().material = highlightmaterial;
             if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetAxis("Mouse ScrollWheel") < 0f){
                 if (Input.GetKey(KeyCode.Z)){
                 GrabbedRB.transform.Rotate(0, Input.GetAxis("Mouse ScrollWheel") * 20, 0);
