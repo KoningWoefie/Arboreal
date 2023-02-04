@@ -78,6 +78,8 @@ public class MeleeLumberJack : MonoBehaviour
         {
             anim.SetBool("Melee", true);
             axe.SetActive(true);
+            attackCooldown.StartTimer();
+            Debug.Log("AXE SET TO ACTIVE!!!");
         }
         if(standStill && attackCooldown.Seconds() >= 1.4f)
         {

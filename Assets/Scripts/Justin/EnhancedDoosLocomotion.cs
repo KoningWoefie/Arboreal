@@ -35,6 +35,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     [SerializeField] private GameObject staminaBar;    // The stamina bar that shows the characters stamina.
 
     [SerializeField] private GameObject checkPointHandler;    // The checkpoint handler that handles the checkpoints.
+    private GameObject enemy;   // The enemy.
 
     // Update function, called once per frame.
 
@@ -116,6 +117,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if(hitCooldownTimer.Seconds() >= 2f)
         {
             hit = false;
+            enemy.transform.parent.GetComponent<MeleeLumberJack>().Axe.GetComponent<BoxCollider>().enabled = true;
             hitCooldownTimer.StopTimer();
         }
 
@@ -257,8 +259,10 @@ public class EnhancedDoosLocomotion : MonoBehaviour
                 }
                 if(other.gameObject.transform.parent.GetComponent<MeleeLumberJack>() != null)
                 {
-                    other.gameObject.transform.parent.GetComponent<MeleeLumberJack>().Axe.SetActive(false);
-                    other.gameObject.transform.parent.GetComponent<MeleeLumberJack>().AttackCooldown.StartTimer();
+                    enemy = other.gameObject;
+                    enemy.transform.parent.GetComponent<MeleeLumberJack>().Axe.GetComponent<BoxCollider>().enabled = false;
+                    enemy.transform.parent.GetComponent<MeleeLumberJack>().AttackCooldown.StartTimer();
+                    Debug.Log("AXE SET TO inACTIVE!!!");
                 }
                 hitCooldownTimer.StartTimer();
                 hit = true;
