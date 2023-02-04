@@ -7,12 +7,16 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     public float moveSpeed = 6f;   // The speed of the character's movement.
     public float gravity = -9.81f; // The gravity applied to the character's movement.
     public CharacterController controller;   // The character controller component attached to the object.
+    [SerializeField]private Timer staminaTimer;
+    [SerializeField]private Timer dashCooldownTimer;
+    [SerializeField]private Timer staminaRegenTimer;
 
     // Private variables for internal use.
     private Vector3 moveDirection = Vector3.zero;  // The direction the character is moving.
     [SerializeField] private int health = 100;   // The character's health, serialized to show in the Unity Editor.
     private int maxHealth = 100;    // The character's maximum health.
     [SerializeField] private int stamina = 100;  // The character's stamina, serialized to show in the Unity Editor.
+    public int Stamina { get { return stamina; } set { stamina = value; } }
     private int maxStamina = 100;   // The character's maximum stamina.
     private bool lockedOn = false;  // A flag to determine if the character is locked on to an enemy.
 
@@ -44,6 +48,29 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             lockedOn = !lockedOn;
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Dash();
+        }
+        if(staminaTimer.Seconds() >= 0.7f)
+        {
+            if(stamina != maxStamina)
+            {
+                if(staminaRegenTimer.Seconds() == 0)
+                {
+                    staminaRegenTimer.StartTimer();
+                }
+                if(staminaRegenTimer.Seconds() >= 0.05f)
+                {
+                    stamina++;
+                    staminaRegenTimer.StopTimer();
+                }
+            }
+            else
+            {
+                staminaTimer.StopTimer();
+            }
         }
 
         LockOn();
@@ -115,6 +142,15 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     {
         if (stamina > 0)
         {
+            if(staminaTimer.Seconds() == 0)
+            {
+                staminaTimer.StartTimer();
+            }
+            else
+            {
+                staminaTimer.StopTimer();
+                staminaTimer.StartTimer();
+            }
             stamina -= 10;
             if(Input.GetKey(KeyCode.A))
             {
