@@ -40,8 +40,8 @@ public class RootManipulation : MonoBehaviour
         {
             if(GrabbedRB)
             {
-                GrabbedRB.isKinematic = false;
                 GrabbedRB.gameObject.layer = 0;
+                GrabbedRB.isKinematic = false;
                 GrabbedRB = null;
                 isGrabbed = false;
             }

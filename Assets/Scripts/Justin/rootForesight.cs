@@ -39,11 +39,13 @@ public class rootForesight : MonoBehaviour
 
         // Remove the EnemyLayer of all GameObjects more than 10 units away from the player, re-add it if they are closer than 10 units
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
-            if (Vector3.Distance(enemy.transform.position, transform.position) > 10) {
+            if (Vector3.Distance(enemy.transform.position, transform.position) > 50) {
                 enemy.layer = 0;
             } else {
                 enemy.layer = 6;
             }
+
+            Debug.Log("Distance: " + Vector3.Distance(enemy.transform.position, transform.position));
         }
 
     }

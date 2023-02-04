@@ -12,6 +12,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     [SerializeField]private int health = 100;   // The character's health, serialized to show in the Unity Editor.
     private bool lockedOn = false;  // A flag to determine if the character is locked on to an enemy.
 
+    private bool hasLockIcon = false;   // A flag to determine if the lock icon has been instantiated.
+
     // Update function, called once per frame.
 
     void Update()
@@ -75,13 +77,30 @@ void LockOn()
 
         // Look at the closest enemy using Lerp.
         transform.LookAt(closestEnemy.transform);
-
         GetComponentInChildren<camera>().enabled = false;
+
+        // if the lockOnAnchor isn't a child of the closest enemy, instantiate it.
+        if (closestEnemy.transform.Find("lockonAnchor(Clone)") == null) {
+            GameObject lockOnAnchor = Instantiate(Resources.Load("lockOnAnchor"), closestEnemy.transform.position, Quaternion.identity) as GameObject;
+            lockOnAnchor.transform.parent = closestEnemy.transform;
+            lockOnAnchor.transform.localPosition = new Vector3(0, 0.5f, 0);
+        }
+
+        // If there are multiple lockOnAnchors, destroy the oldest one. Check the count by getting the number of gameObjects with "lockOnAnchor" in their name.
+        if (GameObject.FindGameObjectsWithTag("lockOnAnchor").Length > 1)
+        {
+            Destroy(GameObject.FindGameObjectsWithTag("lockOnAnchor")[0]);
+        }
     }
     // If the character is not locked on to an enemy, enable the character's camera.
     else
     {
         GetComponentInChildren<camera>().enabled = true;
+
+        foreach (GameObject lockOnAnchor in GameObject.FindGameObjectsWithTag("lockOnAnchor"))
+        {
+            Destroy(lockOnAnchor);
+        }
     }
     }
 }

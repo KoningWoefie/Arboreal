@@ -9,6 +9,7 @@ TagManager:
   - Selectable
   - Root
   - Axe
+  - lockOnAnchor
   layers:
   - Default
   - TransparentFX
