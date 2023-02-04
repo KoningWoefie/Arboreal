@@ -5,6 +5,7 @@ using UnityEngine;
 public class camera : MonoBehaviour
 {
     public bool enable = true;
+    private float mouseY;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,9 @@ public class camera : MonoBehaviour
     void Rotate()
     {
         transform.parent.transform.parent.transform.Rotate(0, Input.GetAxis("Mouse X"), 0);
+        mouseY += Input.GetAxis("Mouse Y");
+        mouseY = Mathf.Clamp(mouseY, -40, 40);
+        transform.parent.transform.rotation = Quaternion.Euler(-mouseY, 0, 0);
     }
     
     void Enable()
