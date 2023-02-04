@@ -38,6 +38,15 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         moveDirection = transform.TransformDirection(moveDirection);
         moveDirection *= moveSpeed * Time.deltaTime;
 
+        if(moveDirection != Vector3.zero)
+        {
+            GetComponent<Animator>().SetBool("Walking", true);
+        }
+        else
+        {
+            GetComponent<Animator>().SetBool("Walking", false);
+        }
+
         // Add gravity to the move direction.
         moveDirection.y = gravity * Time.deltaTime;
 
@@ -65,7 +74,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
                 staminaTimer.StartTimer();
             }
         }
-        if(staminaTimer.Seconds() >= 1.5f)
+        if(staminaTimer.Seconds() >= 1f)
         {
             if(stamina != maxStamina)
             {
@@ -154,7 +163,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     void Dash()
     {
-        if (stamina > 0)
+        if (stamina >= 10)
         {
             stamina -= 10;
             if(Input.GetKey(KeyCode.A))
