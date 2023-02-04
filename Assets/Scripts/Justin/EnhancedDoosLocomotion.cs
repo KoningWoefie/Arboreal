@@ -26,6 +26,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     private bool hasLockIcon = false;   // A flag to determine if the lock icon has been instantiated.
 
+    private bool dashed = false;    // A flag to determine if the character has dashed.
+
     [SerializeField] private GameObject healthBar;    // The health bar that shows the characters health.
     [SerializeField] private GameObject staminaBar;    // The stamina bar that shows the characters stamina.
 
@@ -82,7 +84,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             {
                 staminaTimer.StartTimer();
             }
-            else
+            else if(dashed || GetComponentInChildren<Melee>().Attacking)
             {
                 staminaTimer.StopTimer();
                 staminaTimer.StartTimer();
@@ -104,6 +106,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             }
             else
             {
+                Debug.Log("Stamina is full");
                 staminaTimer.StopTimer();
             }
         }
@@ -180,6 +183,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if (stamina >= 10)
         {
             stamina -= 10;
+            dashed = true;
+            dashCooldownTimer.StartTimer();
             if(Input.GetKey(KeyCode.A))
             {
                 controller.Move(-transform.right * 10);
@@ -196,6 +201,11 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             {
                 controller.Move(-transform.forward * 10);
             }
+        }
+        if(dashCooldownTimer.Seconds() >= 0.5f)
+        {
+            dashed = false;
+            dashCooldownTimer.StopTimer();
         }
     }
 
@@ -219,7 +229,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     void updateStaminaBar()
     {
-        if(stamina != 0)
+        if(stamina != maxStamina)
         {
             staminaBar.transform.localScale = new Vector3((float)(stamina / maxStamina), 1, 1);
         }
