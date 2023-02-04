@@ -6,6 +6,7 @@ public class camera : MonoBehaviour
 {
     public bool enable = true;
     private float mouseY;
+    private float mouseX;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,10 +24,11 @@ public class camera : MonoBehaviour
     }
     void Rotate()
     {
-        transform.parent.transform.parent.transform.Rotate(0, Input.GetAxis("Mouse X"), 0);
         mouseY += Input.GetAxis("Mouse Y");
+        mouseX += Input.GetAxis("Mouse X");
         mouseY = Mathf.Clamp(mouseY, -40, 40);
-        transform.parent.transform.rotation = Quaternion.Euler(-mouseY, 0, 0);
+        transform.parent.transform.parent.transform.rotation = Quaternion.Euler(0, mouseX, 0);
+        transform.parent.transform.rotation = Quaternion.Euler(-mouseY, mouseX, 0);
     }
     
     void Enable()

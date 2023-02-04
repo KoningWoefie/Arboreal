@@ -53,6 +53,18 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         {
             Dash();
         }
+        if(stamina < maxStamina)
+        {
+            if(staminaTimer.Seconds() == 0)
+            {
+                staminaTimer.StartTimer();
+            }
+            else
+            {
+                staminaTimer.StopTimer();
+                staminaTimer.StartTimer();
+            }
+        }
         if(staminaTimer.Seconds() >= 0.7f)
         {
             if(stamina != maxStamina)
@@ -142,15 +154,6 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     {
         if (stamina > 0)
         {
-            if(staminaTimer.Seconds() == 0)
-            {
-                staminaTimer.StartTimer();
-            }
-            else
-            {
-                staminaTimer.StopTimer();
-                staminaTimer.StartTimer();
-            }
             stamina -= 10;
             if(Input.GetKey(KeyCode.A))
             {
