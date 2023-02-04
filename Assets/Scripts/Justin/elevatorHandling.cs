@@ -23,6 +23,8 @@ public class elevatorHandling : MonoBehaviour
         instruText = GameObject.Find("instruText").GetComponent<Text>();
 
         bottomInstruBar.transform.localScale = new Vector3(0, 0, 0);
+
+        GameObject.Find("mainArea").transform.localScale = new Vector3(0, 0, 0);
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -65,8 +67,12 @@ public class elevatorHandling : MonoBehaviour
 
     void TeleportToPlayArea() {
         // Teleport player to play area
-        Player.transform.position = new Vector3(-0.29f, 0.56f, -15.6f);
+        GameObject.Find("mainArea").transform.position = new Vector3(1,1,1);
+
+        Player.transform.position = new Vector3(-2.61f, -16.66f, -267.07f);
         RenderSettings.fog = false;
         CancelInvoke();
+
+        GameObject.Find("TutorialMap").transform.localScale = new Vector3(0, 0, 0);
     }
 }

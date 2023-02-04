@@ -10,6 +10,7 @@ public class RootManipulation : MonoBehaviour
     [SerializeField] Material highlightmaterial;
 
     Rigidbody GrabbedRB;
+    public bool isGrabbed;
 
     void Start()
     {
@@ -41,6 +42,7 @@ public class RootManipulation : MonoBehaviour
             {
                 GrabbedRB.isKinematic = false;
                 GrabbedRB = null;
+                isGrabbed = false;
             }
             else
             {
@@ -51,9 +53,16 @@ public class RootManipulation : MonoBehaviour
                    GrabbedRB = hit.transform.GetComponent<Rigidbody>();
                    if(GrabbedRB){
                         GrabbedRB.isKinematic = true;
+                        isGrabbed = true;
                    }
                 }
             }     
+        }
+    }
+
+    void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag == "Selectable" && isGrabbed) {
+            Physics.IgnoreCollision(other.collider, GetComponent<Collider>());
         }
     }
 }
