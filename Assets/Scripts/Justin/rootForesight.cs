@@ -44,10 +44,7 @@ public class rootForesight : MonoBehaviour
             } else {
                 enemy.layer = 6;
             }
-
-            Debug.Log("Distance: " + Vector3.Distance(enemy.transform.position, transform.position));
         }
-
     }
 
     public void RootSight(bool Enabled) {

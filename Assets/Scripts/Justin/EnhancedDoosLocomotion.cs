@@ -76,7 +76,7 @@ void LockOn()
         }
 
         // Look at the closest enemy using Lerp.
-        transform.LookAt(closestEnemy.transform);
+        transform.LookAt(new Vector3(closestEnemy.transform.position.x, transform.position.y, closestEnemy.transform.position.z));
         GetComponentInChildren<camera>().enabled = false;
 
         // if the lockOnAnchor isn't a child of the closest enemy, instantiate it.
