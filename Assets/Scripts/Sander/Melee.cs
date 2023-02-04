@@ -23,7 +23,7 @@ public class Melee : MonoBehaviour
     protected int damage = 10;
     [SerializeField]protected int health = 100;
 
-    public int Damage { get => damage; }
+    public int Damage { get => damage; set => damage = value; }
     //floats
     private float parryWindow = 0.2f;
     private float attackDuration = 1.2f;

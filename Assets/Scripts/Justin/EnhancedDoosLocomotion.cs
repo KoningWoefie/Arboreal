@@ -15,9 +15,11 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;  // The direction the character is moving.
     [SerializeField] private float health = 100;   // The character's health, serialized to show in the Unity Editor.
     private float maxHealth = 100;    // The character's maximum health.
+    public float MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
     [SerializeField] private float stamina = 100;  // The character's stamina, serialized to show in the Unity Editor.
     public float Stamina { get { return stamina; } set { stamina = value; } }
     private float maxStamina = 100;   // The character's maximum stamina.
+    public float MaxStamina { get { return maxStamina; } set { maxStamina = value; } }
     private bool lockedOn = false;  // A flag to determine if the character is locked on to an enemy.
 
     private bool hasLockIcon = false;   // A flag to determine if the lock icon has been instantiated.
