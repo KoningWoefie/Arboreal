@@ -13,6 +13,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     // Private variables for internal use.
     private Vector3 moveDirection = Vector3.zero;  // The direction the character is moving.
+
     [SerializeField] private float health = 100;   // The character's health, serialized to show in the Unity Editor.
     private float maxHealth = 100;    // The character's maximum health.
     public float MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
@@ -20,12 +21,15 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     public float Stamina { get { return stamina; } set { stamina = value; } }
     private float maxStamina = 100;   // The character's maximum stamina.
     public float MaxStamina { get { return maxStamina; } set { maxStamina = value; } }
+
     private bool lockedOn = false;  // A flag to determine if the character is locked on to an enemy.
 
     private bool hasLockIcon = false;   // A flag to determine if the lock icon has been instantiated.
 
     [SerializeField] private GameObject healthBar;    // The health bar that shows the characters health.
     [SerializeField] private GameObject staminaBar;    // The stamina bar that shows the characters stamina.
+
+    [SerializeField] private GameObject checkPointHandler;    // The checkpoint handler that handles the checkpoints.
 
     // Update function, called once per frame.
 
@@ -184,6 +188,15 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             {
                 controller.Move(-transform.forward * 10);
             }
+        }
+    }
+
+    void Die()
+    {
+        if(health <= 0)
+        {
+            checkPointHandler.GetComponent<checkpointHandler>().GoToCheckpoint();
+            GetComponent<soilCurrency>().resetSoils();
         }
     }
 
