@@ -2493,7 +2493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 804269819}
   maxgrabdistance: 30
-  objectholder: {fileID: 0}
+  objectholder: {fileID: 540192559175873458}
   highlightmaterial: {fileID: -2653651044934150266, guid: fe7a2c974e363e640a27a624146ada53,
     type: 3}
   isGrabbed: 0
