@@ -65,7 +65,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
                 staminaTimer.StartTimer();
             }
         }
-        if(staminaTimer.Seconds() >= 0.7f)
+        if(staminaTimer.Seconds() >= 1.5f)
         {
             if(stamina != maxStamina)
             {
