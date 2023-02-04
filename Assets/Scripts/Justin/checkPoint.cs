@@ -50,14 +50,18 @@ public class checkPoint : MonoBehaviour
             if (other.gameObject.tag == "Player")
             {
                 if(checkpointNumber == 1) {
+
+                    Debug.Log("IUHDFG 3");
                     instructionalTitle.text = "<b>UNLOCKED:</b> Root Manipulation";
                     instructionalInstruction.text = "Pick up objects with <b>E</b>, then change the position with <b>scrollwheel</b> and hold <b>Z</b> and use your <b>scrollwheel</b> at the same time to rotate the object. Yeah this makes no sense, no we don't care";
                     instructionalPopup.SetActive(true);
 
                     DisableEverything();
                 }
+                Debug.Log("IUHDFG 2");
             }
         }
+        Debug.Log("IUHDFG 1");
     }
 
     void SelfDestruct() {
