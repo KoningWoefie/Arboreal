@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnhancedDoosLocomotion : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     private bool lockedOn = false;  // A flag to determine if the character is locked on to an enemy.
 
     private bool hasLockIcon = false;   // A flag to determine if the lock icon has been instantiated.
+
+    [SerializeField]private GameObject healthBar;    // The health bar image component.
 
     // Update function, called once per frame.
 
@@ -54,53 +57,71 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         health -= damage / 2;
     }
 
-void LockOn()
-{
-    // If the character is locked on to an enemy, look at the closest enemy and disable the character's camera.
-    if (lockedOn)
+    void LockOn()
     {
-        // Get all the enemies in the scene.
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        float closestEnemyDistance = Mathf.Infinity;
-        GameObject closestEnemy = null;
-
-        // Loop through all the enemies and find the closest one.
-        foreach (GameObject enemy in enemies)
+        // If the character is locked on to an enemy, look at the closest enemy and disable the character's camera.
+        if (lockedOn)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy < closestEnemyDistance)
+            // Get all the enemies in the scene.
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            float closestEnemyDistance = Mathf.Infinity;
+            GameObject closestEnemy = null;
+
+            // Loop through all the enemies and find the closest one.
+            foreach (GameObject enemy in enemies)
             {
-                closestEnemyDistance = distanceToEnemy;
-                closestEnemy = enemy;
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceToEnemy < closestEnemyDistance)
+                {
+                    closestEnemyDistance = distanceToEnemy;
+                    closestEnemy = enemy;
+                }
+            }
+
+            // Look at the closest enemy using Lerp.
+            transform.LookAt(new Vector3(closestEnemy.transform.position.x, transform.position.y, closestEnemy.transform.position.z));
+            GetComponentInChildren<camera>().enabled = false;
+
+            // if the lockOnAnchor isn't a child of the closest enemy, instantiate it.
+            if (closestEnemy.transform.Find("lockonAnchor(Clone)") == null) {
+                GameObject lockOnAnchor = Instantiate(Resources.Load("lockOnAnchor"), closestEnemy.transform.position, Quaternion.identity) as GameObject;
+                lockOnAnchor.transform.parent = closestEnemy.transform;
+                lockOnAnchor.transform.localPosition = new Vector3(0, 0.5f, 0);
+            }
+
+            // If there are multiple lockOnAnchors, destroy the oldest one. Check the count by getting the number of gameObjects with "lockOnAnchor" in their name.
+            if (GameObject.FindGameObjectsWithTag("lockOnAnchor").Length > 1)
+            {
+                Destroy(GameObject.FindGameObjectsWithTag("lockOnAnchor")[0]);
             }
         }
-
-        // Look at the closest enemy using Lerp.
-        transform.LookAt(new Vector3(closestEnemy.transform.position.x, transform.position.y, closestEnemy.transform.position.z));
-        GetComponentInChildren<camera>().enabled = false;
-
-        // if the lockOnAnchor isn't a child of the closest enemy, instantiate it.
-        if (closestEnemy.transform.Find("lockonAnchor(Clone)") == null) {
-            GameObject lockOnAnchor = Instantiate(Resources.Load("lockOnAnchor"), closestEnemy.transform.position, Quaternion.identity) as GameObject;
-            lockOnAnchor.transform.parent = closestEnemy.transform;
-            lockOnAnchor.transform.localPosition = new Vector3(0, 0.5f, 0);
-        }
-
-        // If there are multiple lockOnAnchors, destroy the oldest one. Check the count by getting the number of gameObjects with "lockOnAnchor" in their name.
-        if (GameObject.FindGameObjectsWithTag("lockOnAnchor").Length > 1)
+        // If the character is not locked on to an enemy, enable the character's camera.
+        else
         {
-            Destroy(GameObject.FindGameObjectsWithTag("lockOnAnchor")[0]);
+            GetComponentInChildren<camera>().enabled = true;
+
+            foreach (GameObject lockOnAnchor in GameObject.FindGameObjectsWithTag("lockOnAnchor"))
+            {
+                Destroy(lockOnAnchor);
+            }
         }
     }
-    // If the character is not locked on to an enemy, enable the character's camera.
-    else
+
+    void updateHealthBar()
     {
-        GetComponentInChildren<camera>().enabled = true;
-
-        foreach (GameObject lockOnAnchor in GameObject.FindGameObjectsWithTag("lockOnAnchor"))
+        if(health != 0)
         {
-            Destroy(lockOnAnchor);
+            healthBar.transform.localScale = new Vector3(health / 100f, 1, 1);
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Axe")
+        {
+            TakeDamage(10);
+            other.gameObject.transform.parent.gameObject.GetComponent<Axe>().enabled = false;
+            other.gameObject.transform.parent.gameObject.transform.parent = transform;
+        }
     }
 }

@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Lumberjack : MonoBehaviour
 {
-    [SerializeField] private Timer t;
+    [SerializeField] private Timer hitCooldown;
+    [SerializeField] private Timer attackCooldown;
     //a reference to the player to kill
     [SerializeField] private GameObject player;
     [SerializeField] private Transform[] waypoints;
+
+    [SerializeField] private GameObject axe;
 
     [SerializeField] private int moveSpeed = 5;
     [SerializeField] private int rotationSpeed = 10;
@@ -16,6 +19,7 @@ public class Lumberjack : MonoBehaviour
     private int health = 100;
 
     private bool hit = false;
+    private bool standStill = false;
 
     private void Move(){
         //moves the lumberjack towards the player if player is in range but stops at a distance of 10 to throw an axe
@@ -23,16 +27,18 @@ public class Lumberjack : MonoBehaviour
         {
             transform.position += transform.forward * Time.deltaTime * moveSpeed;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
+            standStill = false;
         }
         //stand still around the player to shoot an axe
         else if(Vector3.Distance(transform.position, player.transform.position) < 15f && Vector3.Distance(transform.position, player.transform.position) > 8f){
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
+            standStill = true;
         }
         //if player gets to close turn around and run away from the player
         else if (Vector3.Distance(transform.position, player.transform.position) < 8f){
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(transform.position - player.transform.position), Time.deltaTime * rotationSpeed);
             transform.position += transform.forward * Time.deltaTime * moveSpeed;
-
+            standStill = false;
         }
         else
         {
@@ -55,7 +61,15 @@ public class Lumberjack : MonoBehaviour
     private void Attack()
     {
         //shoots an axe at the player
-
+        if(standStill == true && attackCooldown.Seconds() == 0)
+        {
+            GameObject tempAxe = Instantiate(axe, transform.position, transform.rotation);
+            attackCooldown.StartTimer();
+        }
+        else if(attackCooldown.Seconds() >= 0.5f)
+        {
+            attackCooldown.StopTimer();
+        }
     }
 
     void TakeDamage(int damage)
@@ -67,10 +81,11 @@ public class Lumberjack : MonoBehaviour
     private void Update()
     {
         Move();
-        if(t.Seconds() >= 0.3f)
+        Attack();
+        if(hitCooldown.Seconds() >= 0.3f)
         {
             hit = false;
-            t.StopTimer();
+            hitCooldown.StopTimer();
         }
     }
 
@@ -80,7 +95,7 @@ public class Lumberjack : MonoBehaviour
         {
             TakeDamage(10);
             hit = true;
-            t.StartTimer();
+            hitCooldown.StartTimer();
         }
     }
 
