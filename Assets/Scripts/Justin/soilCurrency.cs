@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class soilCurrency : MonoBehaviour
 {
-    private int soilsAmount = 0;
+    public int soilsAmount = 0;
     [SerializeField] private GameObject soilRetreiver;
     // Start is called before the first frame update
 

@@ -58,10 +58,8 @@ public class checkPoint : MonoBehaviour
 
                     DisableEverything();
                 }
-                Debug.Log("IUHDFG 2");
             }
         }
-        Debug.Log("IUHDFG 1");
     }
 
     void SelfDestruct() {
@@ -84,14 +82,14 @@ public class checkPoint : MonoBehaviour
         SelfDestruct();
     }
 
-    void DisableEverything() {
+    public void DisableEverything() {
         Debug.Log("DISABLED EVERYTHING");
         // set level speed to 0
         Camera.main.GetComponent<camera>().enabled = false;
         Player.GetComponent<EnhancedDoosLocomotion>().enabled = false;
     }
 
-    void EnableEverything() {
+    public void EnableEverything() {
         Debug.Log("ENABLED EVERYTHING");
         // set level speed to 1
         Camera.main.GetComponent<camera>().enabled = true;
