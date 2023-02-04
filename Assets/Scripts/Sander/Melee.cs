@@ -11,6 +11,7 @@ public class Melee : MonoBehaviour
     //components
     MeshRenderer Meshrenderer;
     private BoxCollider hitBox;
+    private EnhancedDoosLocomotion player;
     [SerializeField] private Animator anim;
 
     public Animator Anim { get => anim; }
@@ -42,6 +43,7 @@ public class Melee : MonoBehaviour
     void Start()
     {
         Meshrenderer = GetComponent<MeshRenderer>();
+        player = GetComponentInParent<EnhancedDoosLocomotion>();
         hitBox = GetComponent<BoxCollider>();
         hitBox.enabled = false;
     }
@@ -50,16 +52,17 @@ public class Melee : MonoBehaviour
     void Update()
     {
         Attack();
-         Parry();
+        Parry();
         anim.SetBool("Attacking", attacking);
     }
 
     void Attack()
     {
-        if(Input.GetMouseButtonDown(0) && t.Seconds() == 0)
+        if(Input.GetMouseButtonDown(0) && t.Seconds() == 0 && player.Stamina >= 10)
         {
             attacking = true;
             hitBox.enabled = true;
+            player.Stamina -= 10;
             t.StartTimer();
         }
         else if(t.Seconds() >= recoveryTime)

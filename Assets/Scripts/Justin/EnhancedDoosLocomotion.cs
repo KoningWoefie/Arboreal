@@ -7,15 +7,23 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     public float moveSpeed = 6f;   // The speed of the character's movement.
     public float gravity = -9.81f; // The gravity applied to the character's movement.
     public CharacterController controller;   // The character controller component attached to the object.
+    [SerializeField]private Timer staminaTimer;
+    [SerializeField]private Timer dashCooldownTimer;
+    [SerializeField]private Timer staminaRegenTimer;
 
     // Private variables for internal use.
     private Vector3 moveDirection = Vector3.zero;  // The direction the character is moving.
-    [SerializeField]private int health = 100;   // The character's health, serialized to show in the Unity Editor.
+    [SerializeField] private int health = 100;   // The character's health, serialized to show in the Unity Editor.
+    private int maxHealth = 100;    // The character's maximum health.
+    [SerializeField] private int stamina = 100;  // The character's stamina, serialized to show in the Unity Editor.
+    public int Stamina { get { return stamina; } set { stamina = value; } }
+    private int maxStamina = 100;   // The character's maximum stamina.
     private bool lockedOn = false;  // A flag to determine if the character is locked on to an enemy.
 
     private bool hasLockIcon = false;   // A flag to determine if the lock icon has been instantiated.
 
-    [SerializeField]private GameObject healthBar;    // The health bar image component.
+    [SerializeField] private GameObject healthBar;    // The health bar that shows the characters health.
+    [SerializeField] private GameObject staminaBar;    // The stamina bar that shows the characters stamina.
 
     // Update function, called once per frame.
 
@@ -40,6 +48,41 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             lockedOn = !lockedOn;
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Dash();
+        }
+        if(stamina < maxStamina)
+        {
+            if(staminaTimer.Seconds() == 0)
+            {
+                staminaTimer.StartTimer();
+            }
+            else
+            {
+                staminaTimer.StopTimer();
+                staminaTimer.StartTimer();
+            }
+        }
+        if(staminaTimer.Seconds() >= 0.7f)
+        {
+            if(stamina != maxStamina)
+            {
+                if(staminaRegenTimer.Seconds() == 0)
+                {
+                    staminaRegenTimer.StartTimer();
+                }
+                if(staminaRegenTimer.Seconds() >= 0.05f)
+                {
+                    stamina++;
+                    staminaRegenTimer.StopTimer();
+                }
+            }
+            else
+            {
+                staminaTimer.StopTimer();
+            }
         }
 
         LockOn();
@@ -107,11 +150,43 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         }
     }
 
+    void Dash()
+    {
+        if (stamina > 0)
+        {
+            stamina -= 10;
+            if(Input.GetKey(KeyCode.A))
+            {
+                controller.Move(-transform.right * 10);
+            }
+            else if(Input.GetKey(KeyCode.D))
+            {
+                controller.Move(transform.right * 10);
+            }
+            else if(Input.GetKey(KeyCode.W))
+            {
+                controller.Move(transform.forward * 10);
+            }
+            else if(Input.GetKey(KeyCode.S))
+            {
+                controller.Move(-transform.forward * 10);
+            }
+        }
+    }
+
     void updateHealthBar()
     {
         if(health != 0)
         {
-            healthBar.transform.localScale = new Vector3(health / 100f, 1, 1);
+            healthBar.transform.localScale = new Vector3(health / maxHealth, 1, 1);
+        }
+    }
+
+    void updateStaminaBar()
+    {
+        if(stamina != 0)
+        {
+            staminaBar.transform.localScale = new Vector3(stamina / maxStamina, 1, 1);
         }
     }
 
