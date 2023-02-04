@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 5cd7301268cf9884292924a6b7575825
+guid: 3dbef6751fa2bfd4bb1b3977c958b139
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
-      74: 4781951162920444690
-    second: Armature|ArmatureAction
+      74: 6896360661842209225
+    second: Spider_walk.001
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -34,36 +34,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Armature|ArmatureAction
-      takeName: Armature|ArmatureAction
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 39
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []
