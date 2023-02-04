@@ -6,9 +6,17 @@ public class MeleeLumberJack : MonoBehaviour
 {
     [SerializeField] private Timer hitCooldown;
     [SerializeField] private Timer attackCooldown;
+    public Timer AttackCooldown
+    {
+        get { return attackCooldown; }
+    }
     //a reference to the player to kill
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject axe;
+    public GameObject Axe
+    {
+        get { return axe; }
+    }
     [SerializeField] private Transform[] waypoints;
 
     private Animator anim;
@@ -70,12 +78,10 @@ public class MeleeLumberJack : MonoBehaviour
         {
             anim.SetBool("Melee", true);
             axe.SetActive(true);
-            attackCooldown.StartTimer();
         }
         if(standStill && attackCooldown.Seconds() >= 1.4f)
         {
             anim.SetBool("Melee", false);
-            axe.SetActive(false);
             attackCooldown.StopTimer();
         }
     }

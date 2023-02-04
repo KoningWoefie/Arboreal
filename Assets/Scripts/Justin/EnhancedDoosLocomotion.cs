@@ -10,6 +10,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     [SerializeField]private Timer staminaTimer;
     [SerializeField]private Timer dashCooldownTimer;
     [SerializeField]private Timer staminaRegenTimer;
+    [SerializeField]private Timer hitCooldownTimer;
 
     // Private variables for internal use.
     private Vector3 moveDirection = Vector3.zero;  // The direction the character is moving.
@@ -27,6 +28,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     private bool hasLockIcon = false;   // A flag to determine if the lock icon has been instantiated.
 
     private bool dashed = false;    // A flag to determine if the character has dashed.
+
+    private bool hit = false;   // A flag to determine if the character has been hit.
 
     [SerializeField] private GameObject healthBar;    // The health bar that shows the characters health.
     [SerializeField] private GameObject staminaBar;    // The stamina bar that shows the characters stamina.
@@ -110,6 +113,11 @@ public class EnhancedDoosLocomotion : MonoBehaviour
                 staminaTimer.StopTimer();
             }
         }
+        if(hitCooldownTimer.Seconds() >= 2f)
+        {
+            hit = false;
+            hitCooldownTimer.StopTimer();
+        }
 
         LockOn();
         updateHealthBar();
@@ -187,19 +195,19 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             dashCooldownTimer.StartTimer();
             if(Input.GetKey(KeyCode.A))
             {
-                controller.Move(-transform.right * 10);
+                controller.Move(-transform.right * 5);
             }
             else if(Input.GetKey(KeyCode.D))
             {
-                controller.Move(transform.right * 10);
+                controller.Move(transform.right * 5);
             }
             else if(Input.GetKey(KeyCode.W))
             {
-                controller.Move(transform.forward * 10);
+                controller.Move(transform.forward * 5);
             }
             else if(Input.GetKey(KeyCode.S))
             {
-                controller.Move(-transform.forward * 10);
+                controller.Move(-transform.forward * 5);
             }
         }
         if(dashCooldownTimer.Seconds() >= 0.5f)
@@ -221,7 +229,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     void updateHealthBar()
     {
-        if(health != 0)
+        if(health != maxHealth)
         {
             healthBar.transform.localScale = new Vector3((float)(health / maxHealth), 1, 1);
         }
@@ -239,9 +247,22 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     {
         if(other.gameObject.tag == "Axe")
         {
-            TakeDamage(10);
-            other.gameObject.transform.parent.gameObject.GetComponent<Axe>().enabled = false;
-            other.gameObject.transform.parent.gameObject.transform.parent = transform;
+            if(!hit)
+            {
+                TakeDamage(10);
+                if(other.gameObject.transform.parent.gameObject.GetComponent<Axe>() != null)
+                {
+                    other.gameObject.transform.parent.gameObject.GetComponent<Axe>().enabled = false;
+                    other.gameObject.transform.parent.gameObject.transform.parent = transform;
+                }
+                if(other.gameObject.transform.parent.GetComponent<MeleeLumberJack>() != null)
+                {
+                    other.gameObject.transform.parent.GetComponent<MeleeLumberJack>().Axe.SetActive(false);
+                    other.gameObject.transform.parent.GetComponent<MeleeLumberJack>().AttackCooldown.StartTimer();
+                }
+                hitCooldownTimer.StartTimer();
+                hit = true;
+            }
         }
     }
 }
