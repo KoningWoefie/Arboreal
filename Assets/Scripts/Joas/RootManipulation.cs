@@ -41,6 +41,7 @@ public class RootManipulation : MonoBehaviour
             if(GrabbedRB)
             {
                 GrabbedRB.isKinematic = false;
+                GrabbedRB.gameObject.layer = 0;
                 GrabbedRB = null;
                 isGrabbed = false;
             }
@@ -54,6 +55,7 @@ public class RootManipulation : MonoBehaviour
                    if(GrabbedRB){
                         GrabbedRB.isKinematic = true;
                         isGrabbed = true;
+                        GrabbedRB.gameObject.layer = 7;
                    }
                 }
             }     
