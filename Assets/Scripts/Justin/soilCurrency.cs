@@ -20,7 +20,7 @@ public class soilCurrency : MonoBehaviour
     public void resetSoils()
     {
         Instantiate(soilRetreiver, transform.position, Quaternion.Euler(0,0,0));
-        GameObject.Find("soilRetreiver(Clone)").GetComponent<soilRetreiverScript>().soilAmount = soilsAmount;
+        GameObject.Find("SoilRetreiver(Clone)").GetComponent<soilRetreiverScript>().soilAmount = soilsAmount;
         soilsAmount = 0;
     }
 

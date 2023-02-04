@@ -24,6 +24,8 @@ public class soilRetreiverScript : MonoBehaviour
         {
             soilCurrency.addSoils(soilAmount);
             Destroy(gameObject);
+
+            Debug.Log("SOIL RETRIEVED");
         }
     }
 }

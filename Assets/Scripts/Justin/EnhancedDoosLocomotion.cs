@@ -35,6 +35,14 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     void Update()
     {
+        // if player presses P, die
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            health = 0;
+            Die();
+        }
+
+
         // Get input axis for horizontal and vertical movement.
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -191,12 +199,13 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         if(health <= 0)
         {
-            checkPointHandler.GetComponent<checkpointHandler>().GoToCheckpoint();
             GetComponent<soilCurrency>().resetSoils();
+            
+            checkPointHandler.GetComponent<checkpointHandler>().GoToCheckpoint();
         }
     }
 
