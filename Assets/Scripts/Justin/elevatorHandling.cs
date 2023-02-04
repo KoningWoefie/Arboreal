@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class elevatorHandling : MonoBehaviour
 {
@@ -12,8 +13,16 @@ public class elevatorHandling : MonoBehaviour
 
     private GameObject Player;
 
+    GameObject bottomInstruBar;
+    Text instruText;
+
     void Start() {
         Player = GameObject.Find("Player");
+
+        bottomInstruBar = GameObject.Find("bottomInstruBar");
+        instruText = GameObject.Find("instruText").GetComponent<Text>();
+
+        bottomInstruBar.transform.localScale = new Vector3(0, 0, 0);
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -21,6 +30,9 @@ public class elevatorHandling : MonoBehaviour
             // Interaction stuffies
             Debug.Log("Player could interact");
             canInteract = true;
+
+            bottomInstruBar.transform.localScale = new Vector3(1, 1, 1);
+            instruText.text = "Press E to use elevator";
         }
     }
     private void OnTriggerExit(Collider other) {
@@ -28,6 +40,9 @@ public class elevatorHandling : MonoBehaviour
             // Interaction stuffies
             Debug.Log("Player couldnt interact");
             canInteract = false;
+
+            bottomInstruBar.transform.localScale = new Vector3(0, 0, 0);
+            instruText.text = "";
         }
     }
 
@@ -36,6 +51,9 @@ public class elevatorHandling : MonoBehaviour
             if (!isMoving) {
                 Debug.Log("Player interacted");
                 isMoving = true;
+
+                bottomInstruBar.transform.localScale = new Vector3(0, 0, 0);
+                instruText.text = "";
             }
         }
 
