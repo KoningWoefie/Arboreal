@@ -26,7 +26,7 @@ public class camera : MonoBehaviour
     {
         mouseY += Input.GetAxis("Mouse Y");
         mouseX += Input.GetAxis("Mouse X");
-        mouseY = Mathf.Clamp(mouseY, -40, 40);
+        mouseY = Mathf.Clamp(mouseY, -30, 40);
         transform.parent.transform.parent.transform.rotation = Quaternion.Euler(0, mouseX, 0);
         transform.parent.transform.rotation = Quaternion.Euler(-mouseY, mouseX, 0);
     }
