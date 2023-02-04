@@ -16,6 +16,11 @@ public class soilCurrency : MonoBehaviour
         soilsAmount -= amount;
     }
 
+    public void resetSoils()
+    {
+        soilsAmount = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
