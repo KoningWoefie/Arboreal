@@ -13,7 +13,7 @@ public class MeleeLumberJack : MonoBehaviour
 
     private Animator anim;
 
-    [SerializeField] private int moveSpeed = 5;
+    [SerializeField] private int moveSpeed = 1;
     [SerializeField] private int rotationSpeed = 10;
 
     private int currentWaypoint ;
@@ -32,7 +32,7 @@ public class MeleeLumberJack : MonoBehaviour
         //moves the lumberjack towards the player if player is in range but stops at a distance of 10 to throw an axe
         if (player != null && Vector3.Distance(transform.position, player.transform.position) < 30f && Vector3.Distance(transform.position, player.transform.position) > 3f)
         {
-            transform.position += transform.forward * Time.deltaTime * moveSpeed;
+            transform.position += transform.forward * Time.deltaTime * moveSpeed / 2;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
             standStill = false;
             anim.SetBool("Walking", true);
@@ -51,7 +51,7 @@ public class MeleeLumberJack : MonoBehaviour
             if (currentWaypoint < waypoints.Length)
             {
                 anim.SetBool("Walking", true);
-                transform.position += transform.forward * Time.deltaTime * moveSpeed;
+                transform.position += transform.forward * Time.deltaTime * moveSpeed / 2;
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(waypoints[currentWaypoint].position - transform.position), Time.deltaTime * rotationSpeed);
                 if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < 0.5f)
                 {
