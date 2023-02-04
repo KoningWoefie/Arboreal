@@ -67,7 +67,7 @@ public class elevatorHandling : MonoBehaviour
 
     void TeleportToPlayArea() {
         // Teleport player to play area
-        GameObject.Find("mainArea").transform.position = new Vector3(1,1,1);
+        GameObject.Find("mainArea").transform.localScale = new Vector3(1,1,1);
 
         Player.transform.position = new Vector3(-2.61f, -16.66f, -267.07f);
         RenderSettings.fog = false;
