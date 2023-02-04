@@ -78,10 +78,20 @@ public class Lumberjack : MonoBehaviour
         Debug.Log("Lumberjack took " + damage + " damage");
     }
 
+    void Die()
+    {
+        if(health <= 0)
+        {
+            player.GetComponent<soilCurrency>().addSoils(50);
+            Destroy(gameObject);
+        }
+    }
+
     private void Update()
     {
         Move();
         Attack();
+        Die();
         if(hitCooldown.Seconds() >= 0.3f)
         {
             hit = false;
