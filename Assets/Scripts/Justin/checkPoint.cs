@@ -40,6 +40,7 @@ public class checkPoint : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             PopupReset();
+            PerformActions(checkpointNumber);
         }
     }
     
@@ -51,10 +52,7 @@ public class checkPoint : MonoBehaviour
                 if(checkpointNumber == 1) {
                     instructionalTitle.text = "<b>UNLOCKED:</b> Root Manipulation";
                     instructionalInstruction.text = "Pick up objects with <b>E</b>, then change the position with <b>scrollwheel</b> and hold <b>Z</b> and use your <b>scrollwheel</b> at the same time to rotate the object. Yeah this makes no sense, no we don't care";
-                    Player.GetComponent<RootManipulation>().enabled = true;
                     instructionalPopup.SetActive(true);
-                    SelectionManager.SetActive(true);
-                    //SelfDestruct();
 
                     DisableEverything();
                 }
@@ -64,6 +62,13 @@ public class checkPoint : MonoBehaviour
 
     void SelfDestruct() {
         Destroy(gameObject);
+    }
+
+    void PerformActions(int level) {
+        if (level==1) {
+            Player.GetComponent<RootManipulation>().enabled = true;
+            SelectionManager.SetActive(true);
+        }
     }
 
     void PopupReset()
