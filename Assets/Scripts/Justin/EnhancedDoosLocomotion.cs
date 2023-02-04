@@ -52,37 +52,36 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         health -= damage / 2;
     }
 
-    void LockOn()
+void LockOn()
+{
+    // If the character is locked on to an enemy, look at the closest enemy and disable the character's camera.
+    if (lockedOn)
     {
-        // If the character is locked on to an enemy, look at the closest enemy and disable the character's camera.
-        if(lockedOn)
-        {
-            // Get all the enemies in the scene.
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            float closestEnemyDistance = Mathf.Infinity;
-            GameObject closestEnemy = null;
+        // Get all the enemies in the scene.
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        float closestEnemyDistance = Mathf.Infinity;
+        GameObject closestEnemy = null;
 
-            // Loop through all the enemies and find the closest one.
-            foreach (GameObject enemy in enemies)
+        // Loop through all the enemies and find the closest one.
+        foreach (GameObject enemy in enemies)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToEnemy < closestEnemyDistance)
             {
-                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-                if (distanceToEnemy < closestEnemyDistance)
-                {
-                    closestEnemyDistance = distanceToEnemy;
-                    closestEnemy = enemy;
-                }
+                closestEnemyDistance = distanceToEnemy;
+                closestEnemy = enemy;
             }
-
-            // Look at the closest enemy.
-            transform.LookAt(closestEnemy.transform);
-
-            GetComponentInChildren<camera>().enabled = false;
         }
-        // If the character is not locked on to an enemy, enable the character's camera.
-        else
-        {
-            GetComponentInChildren<camera>().enabled = true;
-        }
+
+        // Look at the closest enemy using Lerp.
+        transform.LookAt(closestEnemy.transform);
+
+        GetComponentInChildren<camera>().enabled = false;
     }
-
+    // If the character is not locked on to an enemy, enable the character's camera.
+    else
+    {
+        GetComponentInChildren<camera>().enabled = true;
+    }
+    }
 }
