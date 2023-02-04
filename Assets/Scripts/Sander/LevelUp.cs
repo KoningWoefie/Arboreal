@@ -65,7 +65,7 @@ public class LevelUp : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E) && isShopOpen) {
             showShop();
         }
-        if(Input.GetKeyDown(KeyCode.X) || !isShopOpen) {
+        if(Input.GetKeyDown(KeyCode.X) || (!isShopOpen && GameObject.Find("shopUpgrade").transform.localScale == new Vector3(1, 1, 1))) {
             hideShop();
         }
     }
