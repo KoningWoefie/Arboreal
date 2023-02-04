@@ -50,6 +50,7 @@ public class MeleeLumberJack : MonoBehaviour
             //moves the lumberjack towards the next waypoint
             if (currentWaypoint < waypoints.Length)
             {
+                anim.SetBool("Walking", true);
                 transform.position += transform.forward * Time.deltaTime * moveSpeed;
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(waypoints[currentWaypoint].position - transform.position), Time.deltaTime * rotationSpeed);
                 if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < 0.5f)
