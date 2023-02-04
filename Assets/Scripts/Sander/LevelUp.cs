@@ -13,6 +13,8 @@ public class LevelUp : MonoBehaviour
 
     private GameObject shop;
 
+    public bool isShopOpen = false;
+
     void Start() {
         shop = GameObject.Find("shopUpgrade");
         shop.transform.localScale = new Vector3(0, 0, 0);
@@ -60,10 +62,10 @@ public class LevelUp : MonoBehaviour
             GameObject.Find("damageBuyBtn").GetComponent<Button>().interactable = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.K)) {
+        if(Input.GetKeyDown(KeyCode.E) && isShopOpen) {
             showShop();
         }
-        if(Input.GetKeyDown(KeyCode.X)) {
+        if(Input.GetKeyDown(KeyCode.X) || !isShopOpen) {
             hideShop();
         }
     }
