@@ -25,7 +25,7 @@ public class checkPoint : MonoBehaviour
 
         Player = GameObject.Find("Player");
         Player.GetComponent<rootForesight>().enabled = true;
-        Player.GetComponent<RootManipulation>().enabled = false;
+        Player.GetComponent<RootManipulation>().enabled = true;
 
 
         SelectionManager = GameObject.Find("SelectionManager");
