@@ -22,7 +22,7 @@ public class Lumberjack : MonoBehaviour
         if (player != null && Vector3.Distance(transform.position, player.transform.position) < 30f && Vector3.Distance(transform.position, player.transform.position) > 15f)
         {
             transform.position += transform.forward * Time.deltaTime * moveSpeed;
-             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
         }
         //stand still around the player to shoot an axe
         else if(Vector3.Distance(transform.position, player.transform.position) < 15f && Vector3.Distance(transform.position, player.transform.position) > 8f){
@@ -51,6 +51,11 @@ public class Lumberjack : MonoBehaviour
                 currentWaypoint = 0;
             }
         }
+    }
+    private void Attack()
+    {
+        //shoots an axe at the player
+
     }
 
     void TakeDamage(int damage)
