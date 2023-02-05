@@ -36,6 +36,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     [SerializeField] private GameObject checkPointHandler;    // The checkpoint handler that handles the checkpoints.
     private GameObject enemy;   // The enemy.
+    private GameObject walkAudioHandler;    // The audio handler.
 
     // Update function, called once per frame.
 
@@ -61,6 +62,12 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if(moveDirection != Vector3.zero)
         {
             GetComponent<Animator>().SetBool("Walking", true);
+            // Walking audio
+            walkAudioHandler = GameObject.Find("WalkAudioHandler");
+
+            // Play a random audio source from the audioHandler object.
+            walkAudioHandler.GetComponent<audioHandlerScript>().PlayRandomAudioSource();
+            
         }
         else
         {
