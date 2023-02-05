@@ -43,7 +43,7 @@ public class RootManipulation : MonoBehaviour
         {
             if(GrabbedRB && GrabbedRB.gameObject.layer == 7)
             {
-                GrabbedRB.gameObject.layer = 0;
+                GrabbedRB.gameObject.layer = 7;
                 GrabbedRB.isKinematic = false;
                 GrabbedRB = null;
                 isGrabbed = false;
