@@ -41,26 +41,16 @@ public class BossAI : MonoBehaviour
 
     private void Move(){
         //moves the lumberjack towards the player if player is in range but stops at a distance of 10 to throw an axe
-        if (player != null && Vector3.Distance(transform.position, player.transform.position) < 30f && Vector3.Distance(transform.position, player.transform.position) > 15f)
+        if(player != null && Vector3.Distance(transform.position, player.transform.position) > 30f)
         {
-            transform.position += transform.forward * Time.deltaTime * moveSpeed / 2;
+            
+        }
+        else if (player != null && Vector3.Distance(transform.position, player.transform.position) < 30f && Vector3.Distance(transform.position, player.transform.position) > 15f)
+        {
+            transform.position += transform.forward * Time.deltaTime * moveSpeed * 2;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
             standStill = false;
             anim.SetBool("Walking", true);
-        }
-        else if(Vector3.Distance(transform.position, player.transform.position) < 15f && Vector3.Distance(transform.position, player.transform.position) > 9f)
-        {
-            if(!standStill)
-            {
-                transform.position += transform.forward * Time.deltaTime * moveSpeed / 2;
-                anim.SetBool("Walking", true);
-            }
-            else
-            {
-                anim.SetBool("Walking", false);
-            }
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
-            RangedAttack();
         }
         //stand still around the player to shoot an axe
         else if(Vector3.Distance(transform.position, player.transform.position) < 9f){
@@ -76,6 +66,7 @@ public class BossAI : MonoBehaviour
         {
             anim.SetBool("Melee", true);
             meleeAxe.SetActive(true);
+            anim.SetBool("Walking", false);
             attackCooldown.StartTimer();
             audioHandler.PlayRandomAudioSourceFromList(1, false);
             Debug.Log("Melee attack");

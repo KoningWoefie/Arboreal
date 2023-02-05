@@ -278,8 +278,27 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             // Enables AttackCooldown.
             if(melee)
             {
-                MeleeLumberJack axe = enemy.gameObject.transform.parent.GetComponent<MeleeLumberJack>();
-                axe.AttackCooldown.StartTimer();
+                try
+                {
+                    MeleeLumberJack axe = enemy.gameObject.transform.parent.GetComponent<MeleeLumberJack>();
+                    axe.AttackCooldown.StartTimer();
+                }
+                catch{}
+            }
+            if(boss)
+            {
+                try
+                {
+                    BossAI axe = enemy.gameObject.transform.parent.GetComponent<BossAI>();
+                    axe.AttackCooldown.StartTimer();
+                }
+                catch{}
+
+                try
+                {
+                    Destroy(axe);
+                }
+                catch{}
             }
             hitCooldownTimer.StartTimer();
             hit = true;
