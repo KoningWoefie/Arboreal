@@ -14,7 +14,7 @@ public class soilRetreiverScript : MonoBehaviour
 
     void Update() {
         // float da object
-        transform.Rotate(0.3f, 0.3f, 0.3f);
+        //transform.Rotate(0.3f, 0.3f, 0.3f);
     }
 
 
