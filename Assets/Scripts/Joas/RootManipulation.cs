@@ -21,7 +21,6 @@ public class RootManipulation : MonoBehaviour
    
     void Update()
     {
-
         if(GrabbedRB)
         {
             GrabbedRB.GetComponent<Renderer>().material = highlightmaterial;
@@ -43,8 +42,8 @@ public class RootManipulation : MonoBehaviour
         {
             if(GrabbedRB && GrabbedRB.gameObject.layer == 7)
             {
-                GrabbedRB.gameObject.layer = 0;
                 GrabbedRB.isKinematic = false;
+                GrabbedRB.gameObject.layer = 10;
                 GrabbedRB = null;
                 isGrabbed = false;
             }
@@ -52,10 +51,10 @@ public class RootManipulation : MonoBehaviour
             {
                 RaycastHit hit;
                 Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                if(Physics.Raycast(ray, out hit, maxgrabdistance) && hit.transform.gameObject.layer == 7)
+                if(Physics.Raycast(ray, out hit, maxgrabdistance) && (hit.transform.gameObject.layer == 7 || hit.transform.gameObject.layer == 10))
                 {
                    GrabbedRB = hit.transform.GetComponent<Rigidbody>();
-                   if(GrabbedRB && GrabbedRB.gameObject.layer == 7){
+                   if(GrabbedRB && (GrabbedRB.gameObject.layer == 7 || GrabbedRB.gameObject.layer == 10)){
                         GrabbedRB.isKinematic = true;
                         isGrabbed = true;
                         GrabbedRB.gameObject.layer = 7;
