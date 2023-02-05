@@ -6,6 +6,7 @@ public class BossAI : MonoBehaviour
 {
     [SerializeField] private Timer hitCooldown;
     [SerializeField] private Timer attackCooldown;
+    [SerializeField] private audioHandlerScript audioHandler;    // The audio handler.
     public Timer AttackCooldown
     {
         get { return attackCooldown; }
@@ -15,6 +16,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] private GameObject axeSpawnPoint;
     [SerializeField] private GameObject rangedAxe;
     [SerializeField] private GameObject meleeAxe;
+
     public GameObject RangedAxe
     {
         get { return rangedAxe; }
@@ -75,6 +77,8 @@ public class BossAI : MonoBehaviour
             anim.SetBool("Melee", true);
             meleeAxe.SetActive(true);
             attackCooldown.StartTimer();
+            audioHandler.PlayRandomAudioSourceFromList(1, false);
+            Debug.Log("Melee attack");
         }
         if(standStill && attackCooldown.Seconds() >= 1.4f)
         {
@@ -90,6 +94,8 @@ public class BossAI : MonoBehaviour
             anim.SetBool("Throw", true);
             standStill = true;
             attackCooldown.StartTimer();
+            audioHandler.PlayRandomAudioSourceFromList(1, false);
+            Debug.Log("Ranged attack");
         }
         else if(attackCooldown.Seconds() >= 2.7f)
         {
