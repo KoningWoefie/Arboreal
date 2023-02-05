@@ -52,8 +52,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             health = 0;
-            Die();
         }
+        Die();
 
 
         // Get input axis for horizontal and vertical movement.
@@ -133,6 +133,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             enemy.SetActive(true);
             Debug.Log("Hit cooldown over");
             hitCooldownTimer.StopTimer();
+            Debug.Log("Hit cooldown over");
         }
 
         LockOn();
@@ -238,14 +239,14 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if(health <= 0)
         {
             GetComponent<soilCurrency>().resetSoils();
-            
+            health = maxHealth;
             checkPointHandler.GetComponent<checkpointHandler>().GoToCheckpoint();
         }
     }
 
     void updateHealthBar()
     {
-        if(health != maxHealth)
+        if(health != 0)
         {
             healthBar.transform.localScale = new Vector3((float)(health / maxHealth), 1, 1);
         }
@@ -261,16 +262,18 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     void getHit()
     {
-        if(!hit)
+        if(hitCooldownTimer.Seconds() == 0)
         {
             TakeDamage(3);
             if(ranged)
             {
+                try{
                 axe.GetComponent<Axe>().enabled = false;
                 axe.transform.parent = transform;
+                }catch{}
             }
             // Enables AttackCooldown.
-            else if(melee)
+            if(melee)
             {
                 MeleeLumberJack axe = enemy.gameObject.transform.parent.GetComponent<MeleeLumberJack>();
                 axe.AttackCooldown.StartTimer();

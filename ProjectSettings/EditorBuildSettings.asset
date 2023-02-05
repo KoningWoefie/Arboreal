@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Justin/Justin.unity
     guid: 25ae1fc23affaf0498f4633f096ca689
+  - enabled: 1
+    path: Assets/Scenes/Tobias/Tobias.unity
+    guid: 6de53ca6cd3ec964ab1c34ed736cedf5
   m_configObjects: {}

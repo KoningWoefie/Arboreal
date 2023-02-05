@@ -37,7 +37,7 @@ public class checkPoint : MonoBehaviour
     void Update()
     {
         // If player presses Enter while the instructional popup is active, reset the popup
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && instructionalPopup.activeSelf)
         {
             PopupReset();
             PerformActions(checkpointNumber);

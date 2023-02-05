@@ -24,7 +24,7 @@ public class MeleeLumberJack : MonoBehaviour
     [SerializeField] private int moveSpeed = 1;
     [SerializeField] private int rotationSpeed = 10;
 
-    private int currentWaypoint ;
+    private int currentWaypoint;
     [SerializeField]private int health = 100;
 
     private bool hit = false;
@@ -33,7 +33,6 @@ public class MeleeLumberJack : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        axe.SetActive(false);
     }
 
     private void Move(){
@@ -72,6 +71,16 @@ public class MeleeLumberJack : MonoBehaviour
             }
         }
     }
+
+    public void disableCollider()
+    {
+        axe.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void enableCollider()
+    {
+        axe.GetComponent<BoxCollider>().enabled = true;
+    }
     private void Attack()
     {
         if(attackCooldown.Seconds() == 0)
@@ -91,7 +100,10 @@ public class MeleeLumberJack : MonoBehaviour
     void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log("Lumberjack took " + damage + " damage");
+        Debug.Log("Lumberjack took " + damage + " damage, which means the amount of remaining HP is " + health);
+        // instantiate the minusTenEFF prefab above the enemy
+        GameObject minusTenEFF = Instantiate(Resources.Load("minusTenEFF", typeof(GameObject))) as GameObject;
+        minusTenEFF.transform.position = transform.position + new Vector3(0, 0, 0);
     }
 
     void Die()
@@ -107,7 +119,7 @@ public class MeleeLumberJack : MonoBehaviour
     {
         Move();
         Die();
-        if(hitCooldown.Seconds() >= 0.3f)
+        if(hitCooldown.Seconds() >= 1f)
         {
             hit = false;
             hitCooldown.StopTimer();
@@ -116,11 +128,12 @@ public class MeleeLumberJack : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Root" && hit == false)
+        if(other.gameObject.tag == "Root" && hitCooldown.Seconds() == 0)
         {
             TakeDamage(10);
             hit = true;
             hitCooldown.StartTimer();
         }
     }
+
 }

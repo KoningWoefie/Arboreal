@@ -16,23 +16,27 @@ public class audioHandlerScript : MonoBehaviour
         // If there's no audio sources currently playing, play a random one
         if (!IsAnyAudioSourcePlaying())
         {
-            PlayRandomAudioSourceFromList(4);
+            PlayRandomAudioSourceFromList(4, true);
         }
     }
 
-    private void PlayRandomAudioSourceFromList(int howManyAudioSourcesToPlay)
+    public void PlayRandomAudioSourceFromList(int howManyAudioSourcesToPlay, bool isChangingPitch)
     {
         // Get a random audio source from the list
         int randomAudioSourceIndex = Random.Range(0, audioSources.Length);
 
         int randomIndex = Random.Range(0, audioSources.Length);
-        audioSources[randomIndex].pitch = Random.Range(0.9f, 2f);
         audioSources[randomIndex].Play();
+
+        if(isChangingPitch == true)
+        {
+            audioSources[randomIndex].pitch = Random.Range(0.9f, 2f);
+        }
 
         // If we still have audio sources to play, play another one
         if (howManyAudioSourcesToPlay > 1)
         {
-            PlayRandomAudioSourceFromList(howManyAudioSourcesToPlay - 1);
+            PlayRandomAudioSourceFromList(howManyAudioSourcesToPlay - 1, true);
         }
     }
 
@@ -46,5 +50,10 @@ public class audioHandlerScript : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void PlaySpecificAudioSource(int audioSourceIndex)
+    {
+      audioSources[audioSourceIndex].Play();
     }
 }

@@ -94,8 +94,7 @@ public class Melee : MonoBehaviour
         if (collisionInfo.collider.tag == "Enemy" && attacking)
         {
             Melee m = collisionInfo.gameObject.GetComponentInChildren<Melee>();
-
-            collisionInfo.gameObject.GetComponent<Player>().TakeDamage(damage);
+            
             attacking = false;
             t.StopTimer();
         }
