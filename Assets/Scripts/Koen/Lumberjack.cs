@@ -81,6 +81,7 @@ public class Lumberjack : MonoBehaviour
         else if(attackCooldown.Seconds() >= 2f && thrown == false)
         {
             GameObject tempAxe = Instantiate(axe, axeSpawnPoint.transform.position, transform.rotation);
+            tempAxe.SetActive(true);
             thrown = true;
         }
     }
