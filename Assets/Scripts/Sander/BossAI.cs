@@ -13,10 +13,11 @@ public class BossAI : MonoBehaviour
     //a reference to the player to kill
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject axeSpawnPoint;
-    [SerializeField] private GameObject axe;
-    public GameObject Axe
+    [SerializeField] private GameObject rangedAxe;
+    [SerializeField] private GameObject meleeAxe;
+    public GameObject RangedAxe
     {
-        get { return axe; }
+        get { return rangedAxe; }
     }
 
     private Animator anim;
@@ -31,16 +32,9 @@ public class BossAI : MonoBehaviour
     private bool standStill = false;
     private bool thrown = false;
 
-    private bool ranged = false;
-    private bool melee = false;
-
-    public bool Ranged { get { return ranged; } }
-    public bool Melee { get { return melee; } }
-
     void Start()
     {
         anim = GetComponent<Animator>();
-        axe.SetActive(false);
     }
 
     private void Move(){
@@ -65,16 +59,12 @@ public class BossAI : MonoBehaviour
             }
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
             RangedAttack();
-            ranged = true;
-            melee = false;
         }
         //stand still around the player to shoot an axe
         else if(Vector3.Distance(transform.position, player.transform.position) < 9f){
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
             standStill = true;
             anim.SetBool("Walking", false);
-            melee = true;
-            ranged = false;
             MeleeAttack();
         }
     }
@@ -83,7 +73,7 @@ public class BossAI : MonoBehaviour
         if(attackCooldown.Seconds() == 0)
         {
             anim.SetBool("Melee", true);
-            axe.SetActive(true);
+            meleeAxe.SetActive(true);
             attackCooldown.StartTimer();
         }
         if(standStill && attackCooldown.Seconds() >= 1.4f)
@@ -109,7 +99,7 @@ public class BossAI : MonoBehaviour
         }
         else if(attackCooldown.Seconds() >= 2f && thrown == false)
         {
-            GameObject tempAxe = Instantiate(axe, axeSpawnPoint.transform.position, transform.rotation);
+            GameObject tempAxe = Instantiate(rangedAxe, axeSpawnPoint.transform.position, transform.rotation);
             tempAxe.SetActive(true);
             standStill = false;
             thrown = true;
