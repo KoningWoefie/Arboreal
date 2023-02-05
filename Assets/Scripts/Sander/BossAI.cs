@@ -31,6 +31,12 @@ public class BossAI : MonoBehaviour
     private bool standStill = false;
     private bool thrown = false;
 
+    private bool ranged = false;
+    private bool melee = false;
+
+    public bool Ranged { get { return ranged; } }
+    public bool Melee { get { return melee; } }
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -51,17 +57,24 @@ public class BossAI : MonoBehaviour
             if(!standStill)
             {
                 transform.position += transform.forward * Time.deltaTime * moveSpeed / 2;
+                anim.SetBool("Walking", true);
+            }
+            else
+            {
+                anim.SetBool("Walking", false);
             }
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
-            anim.SetBool("Walking", false);
             RangedAttack();
+            ranged = true;
+            melee = false;
         }
         //stand still around the player to shoot an axe
         else if(Vector3.Distance(transform.position, player.transform.position) < 9f){
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotationSpeed);
             standStill = true;
             anim.SetBool("Walking", false);
-            
+            melee = true;
+            ranged = false;
             MeleeAttack();
         }
     }
@@ -97,6 +110,7 @@ public class BossAI : MonoBehaviour
         else if(attackCooldown.Seconds() >= 2f && thrown == false)
         {
             GameObject tempAxe = Instantiate(axe, axeSpawnPoint.transform.position, transform.rotation);
+            tempAxe.SetActive(true);
             standStill = false;
             thrown = true;
         }

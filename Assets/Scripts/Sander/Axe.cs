@@ -9,6 +9,8 @@ public class Axe : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.LookAt(GameObject.Find("Player").transform);
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x - 5, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 
     // Update is called once per frame

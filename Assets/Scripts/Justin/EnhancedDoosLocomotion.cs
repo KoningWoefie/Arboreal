@@ -31,8 +31,14 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     private bool hit = false;   // A flag to determine if the character has been hit.
 
+    private bool boss = true;   // A flag to determine if the character is fighting a boss.
+    private bool melee = false; // A flag to determine if the character is fighting a melee enemy.
+    private bool ranged = true;    // A flag to determine if the character is fighting a ranged enemy.
+
     [SerializeField] private GameObject healthBar;    // The health bar that shows the characters health.
     [SerializeField] private GameObject staminaBar;    // The stamina bar that shows the characters stamina.
+
+    private GameObject axe;
 
     [SerializeField] private GameObject checkPointHandler;    // The checkpoint handler that handles the checkpoints.
     private GameObject enemy;   // The enemy.
@@ -245,28 +251,38 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         }
     }
 
+    void getHit()
+    {
+        if(!hit)
+        {
+            TakeDamage(10);
+            if(ranged)
+            {
+                axe.GetComponent<Axe>().enabled = false;
+                axe.transform.parent = transform;
+            }
+            // Enables AttackCooldown.
+            else if(melee)
+            {
+                MeleeLumberJack axe = enemy.gameObject.transform.parent.GetComponent<MeleeLumberJack>();
+                axe.Axe.GetComponent<BoxCollider>().enabled = false;
+                axe.AttackCooldown.StartTimer();
+            }
+            hitCooldownTimer.StartTimer();
+            hit = true;
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Axe")
         {
-            if(!hit)
+            axe = other.gameObject.transform.parent.gameObject;    
+            if(melee)
             {
-                TakeDamage(10);
-                if(other.gameObject.transform.parent.gameObject.GetComponent<Axe>() != null)
-                {
-                    other.gameObject.transform.parent.gameObject.GetComponent<Axe>().enabled = false;
-                    other.gameObject.transform.parent.gameObject.transform.parent = transform;
-                }
-                if(other.gameObject.transform.parent.GetComponent<MeleeLumberJack>() != null)
-                {
-                    enemy = other.gameObject;
-                    enemy.transform.parent.GetComponent<MeleeLumberJack>().Axe.GetComponent<BoxCollider>().enabled = false;
-                    enemy.transform.parent.GetComponent<MeleeLumberJack>().AttackCooldown.StartTimer();
-                    Debug.Log("AXE SET TO inACTIVE!!!");
-                }
-                hitCooldownTimer.StartTimer();
-                hit = true;
+                enemy = other.gameObject;
             }
+            getHit();
         }
     }
 }

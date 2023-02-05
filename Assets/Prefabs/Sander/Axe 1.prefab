@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 6124751717017207232}
   m_Layer: 0
   m_Name: Axe 1
-  m_TagString: Untagged
+  m_TagString: Axe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8043355677278818966
 Transform:
   m_ObjectHideFlags: 0
@@ -142,8 +142,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 4.675956, z: 1}
+  m_Center: {x: 0, y: -1.4991057, z: 0}
 --- !u!114 &3240206151529829888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,7 +538,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 9
+  m_VersionIndex: 15
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
