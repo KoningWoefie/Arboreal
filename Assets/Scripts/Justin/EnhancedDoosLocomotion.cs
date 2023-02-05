@@ -130,7 +130,10 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if(hitCooldownTimer.Seconds() >= 2f)
         {
             hit = false;
-            enemy.SetActive(true);
+            if (enemy != null)
+            {
+                enemy.SetActive(true);
+            }
             Debug.Log("Hit cooldown over");
             hitCooldownTimer.StopTimer();
             Debug.Log("Hit cooldown over");
