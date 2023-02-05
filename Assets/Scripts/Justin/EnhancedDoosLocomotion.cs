@@ -31,9 +31,9 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     private bool hit = false;   // A flag to determine if the character has been hit.
 
-    private bool boss = true;   // A flag to determine if the character is fighting a boss.
-    private bool melee = false; // A flag to determine if the character is fighting a melee enemy.
-    private bool ranged = true;    // A flag to determine if the character is fighting a ranged enemy.
+    private bool boss = false;   // A flag to determine if the character is fighting a boss.
+    private bool melee = true; // A flag to determine if the character is fighting a melee enemy.
+    private bool ranged = false;    // A flag to determine if the character is fighting a ranged enemy.
 
     [SerializeField] private GameObject healthBar;    // The health bar that shows the characters health.
     [SerializeField] private GameObject staminaBar;    // The stamina bar that shows the characters stamina.
@@ -52,8 +52,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             health = 0;
-            Die();
         }
+        Die();
 
 
         // Get input axis for horizontal and vertical movement.
@@ -130,8 +130,9 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if(hitCooldownTimer.Seconds() >= 2f)
         {
             hit = false;
-            enemy.transform.parent.GetComponent<MeleeLumberJack>().Axe.GetComponent<BoxCollider>().enabled = true;
+            enemy.transform.parent.GetComponent<MeleeLumberJack>().enableCollider();
             hitCooldownTimer.StopTimer();
+            Debug.Log("Hit cooldown over");
         }
 
         LockOn();
@@ -237,14 +238,14 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if(health <= 0)
         {
             GetComponent<soilCurrency>().resetSoils();
-            
+            health = maxHealth;
             checkPointHandler.GetComponent<checkpointHandler>().GoToCheckpoint();
         }
     }
 
     void updateHealthBar()
     {
-        if(health != maxHealth)
+        if(health != 0)
         {
             healthBar.transform.localScale = new Vector3((float)(health / maxHealth), 1, 1);
         }
@@ -260,19 +261,23 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     void getHit()
     {
-        if(!hit)
+        if(hitCooldownTimer.Seconds() == 0)
         {
             TakeDamage(10);
             if(ranged)
             {
+                try{
                 axe.GetComponent<Axe>().enabled = false;
                 axe.transform.parent = transform;
+                }catch{}
             }
             // Enables AttackCooldown.
-            else if(melee)
+            if(melee)
             {
                 MeleeLumberJack axe = enemy.gameObject.transform.parent.GetComponent<MeleeLumberJack>();
-                axe.Axe.GetComponent<BoxCollider>().enabled = false;
+                axe.disableCollider();
+                Debug.Log("Enemy is " + enemy.name);
+                enemy.GetComponent<BoxCollider>().enabled = false;
                 axe.AttackCooldown.StartTimer();
             }
             hitCooldownTimer.StartTimer();
