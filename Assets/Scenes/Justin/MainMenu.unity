@@ -928,7 +928,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 303.1765, y: -77}
+  m_AnchoredPosition: {x: 144, y: -45}
   m_SizeDelta: {x: -1251.6392, y: -947.1259}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1716132061
@@ -953,7 +953,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 47b06d98d9fd7a048ad8d61f046e3d61, type: 3}
-    m_FontSize: 16
+    m_FontSize: 21
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -967,13 +967,10 @@ MonoBehaviour:
   m_Text: 'Game Development:
 
 
-
-
-
     Koen Bos AI Development
 
-    Joas Sahetapy
-    Ability and World Development
+    Joas Sahetapy Ability
+    and World Development
 
     Sander Hoving Character and Combat Development
 
@@ -982,12 +979,7 @@ MonoBehaviour:
 
 
 
-
-
     Game Artists:
-
-
-
 
 
     Tobias Robben
@@ -997,39 +989,21 @@ MonoBehaviour:
 
 
 
+    Audio Design:
 
 
-    Audio
-    Design:
+    Maurice
+    Norden Musical and Sound Effects
 
-
-
-
-
-    Maurice Norden Musical and Sound Effects
-
-    Joas Sahetapy
-    Voice Acting
+    Joas Sahetapy Voice Acting
 
 
 
+    Third-party
+    models:
 
 
-    Third-party models:
-
-    Nicrom Foliage
-
-
-
-
-
-
-
-
-
-
-
-'
+    Nicrom Foliage'
 --- !u!222 &1716132062
 CanvasRenderer:
   m_ObjectHideFlags: 0

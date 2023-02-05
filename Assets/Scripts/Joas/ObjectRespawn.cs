@@ -18,7 +18,8 @@ public class ObjectRespawn : MonoBehaviour
         //make the object respawn after falling under y position -10
         if (objectToRespawn.transform.position.y < -10)
         {
-            objectToRespawn.transform.position = new Vector3(0, 0, -55);
+            objectToRespawn.transform.position = new Vector3(0, 10, -50);
+            objectToRespawn.transform.rotation = Quaternion.Euler(0, 0, 0);
             Debug.Log("Respawned");
         }
         
