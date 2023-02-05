@@ -22,6 +22,7 @@ public class Melee : MonoBehaviour
     //integers
     protected int damage = 10;
     [SerializeField]protected int health = 100;
+    [SerializeField] private audioHandlerScript AttackSound;    // The audio handler.
 
     public int Damage { get => damage; set => damage = value; }
     //floats
@@ -64,6 +65,7 @@ public class Melee : MonoBehaviour
             hitBox.enabled = true;
             player.Stamina -= 3;
             t.StartTimer();
+            AttackSound.PlayRandomAudioSourceFromList(1, false);
         }
         if(t.Seconds() >= recoveryTime)
         {
