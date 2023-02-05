@@ -26,8 +26,8 @@ public class Melee : MonoBehaviour
     public int Damage { get => damage; set => damage = value; }
     //floats
     private float parryWindow = 0.2f;
-    private float attackDuration = 1.2f;
-    private float recoveryTime = 1.5f;
+    private float attackDuration = 1f;
+    private float recoveryTime = 1f;
     //mouse positions
     private float mouseX = 0;
     private float mouseY = 0;
@@ -52,24 +52,24 @@ public class Melee : MonoBehaviour
     void Update()
     {
         Attack();
-        Parry();
+        //Parry();
         anim.SetBool("Attacking", attacking);
     }
 
     void Attack()
     {
-        if(Input.GetMouseButtonDown(0) && t.Seconds() == 0 && player.Stamina >= 10)
+        if(Input.GetMouseButtonDown(0) && player.Stamina >= 3)
         {
             attacking = true;
             hitBox.enabled = true;
-            player.Stamina -= 10;
+            player.Stamina -= 3;
             t.StartTimer();
         }
-        else if(t.Seconds() >= recoveryTime)
+        if(t.Seconds() >= recoveryTime)
         {
             t.StopTimer();
         }
-        else if(t.Seconds() >= attackDuration)
+        if(t.Seconds() >= attackDuration)
         {
             attacking = false;
             hitBox.enabled = false;
