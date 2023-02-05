@@ -31,9 +31,9 @@ public class EnhancedDoosLocomotion : MonoBehaviour
 
     private bool hit = false;   // A flag to determine if the character has been hit.
 
-    private bool boss = true;   // A flag to determine if the character is fighting a boss.
-    private bool melee = false; // A flag to determine if the character is fighting a melee enemy.
-    private bool ranged = true;    // A flag to determine if the character is fighting a ranged enemy.
+    private bool boss = false;   // A flag to determine if the character is fighting a boss.
+    private bool melee = true; // A flag to determine if the character is fighting a melee enemy.
+    private bool ranged = false;    // A flag to determine if the character is fighting a ranged enemy.
 
     [SerializeField] private GameObject healthBar;    // The health bar that shows the characters health.
     [SerializeField] private GameObject staminaBar;    // The stamina bar that shows the characters stamina.
@@ -130,7 +130,8 @@ public class EnhancedDoosLocomotion : MonoBehaviour
         if(hitCooldownTimer.Seconds() >= 2f)
         {
             hit = false;
-            enemy.transform.parent.GetComponent<MeleeLumberJack>().Axe.GetComponent<BoxCollider>().enabled = true;
+            enemy.SetActive(true);
+            Debug.Log("Hit cooldown over");
             hitCooldownTimer.StopTimer();
         }
 
@@ -262,7 +263,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
     {
         if(!hit)
         {
-            TakeDamage(10);
+            TakeDamage(3);
             if(ranged)
             {
                 axe.GetComponent<Axe>().enabled = false;
@@ -272,7 +273,6 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             else if(melee)
             {
                 MeleeLumberJack axe = enemy.gameObject.transform.parent.GetComponent<MeleeLumberJack>();
-                axe.Axe.GetComponent<BoxCollider>().enabled = false;
                 axe.AttackCooldown.StartTimer();
             }
             hitCooldownTimer.StartTimer();
@@ -288,6 +288,7 @@ public class EnhancedDoosLocomotion : MonoBehaviour
             if(melee)
             {
                 enemy = other.gameObject;
+                enemy.SetActive(false);
             }
             getHit();
         }
