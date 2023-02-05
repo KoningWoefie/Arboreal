@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class elevatorHandling : MonoBehaviour
 {
@@ -74,5 +75,8 @@ public class elevatorHandling : MonoBehaviour
         CancelInvoke();
 
         GameObject.Find("TutorialMap").transform.localScale = new Vector3(0, 0, 0);
+
+        // LOAD THE TOBIAS SCENE
+        SceneManager.LoadScene("Tobias");
     }
 }
